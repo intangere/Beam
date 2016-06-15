@@ -11,7 +11,7 @@ git clone http://github.com/intangere/Irx.git
 Usage:<br>
 ```
   beam = Beam() #Initialize a Markov Chain state<br>
-  vocab, vocab_recv = beam.getVocab() #Get our current vocabulary set<br>
+  vocab, vocab_rev = beam.getVocab() #Get our current vocabulary set<br>
   beam.addToVocab(word) #Add a word to our vocabulary set<br>
   beam.addToChain(sentence) #Adds a sentence to the database via triple sets<br>
   beam.generateText(seed_sentence) #Seed a markov chain state and generate new text<br>
