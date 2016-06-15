@@ -16,3 +16,33 @@ Usage:<br>
   beam.addToChain(sentence) #Adds a sentence to the database via triple sets<br>
   beam.generateText(seed_sentence) #Seed a markov chain state and generate new text<br>
 ```
+Database Structure/Creation:<br>
+```
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import sqlite3 as lite
+import sys
+
+con = None
+
+try:
+	con = lite.connect('data/data.db')
+	cur = con.cursor()    
+	cur.execute(
+		"CREATE TABLE data ("
+			"key TEXT,"
+			"value TEXT"
+		")"
+	)       
+    
+except lite.Error, e:
+    
+    print "Error %s:" % e.args[0]
+    sys.exit(1)
+    
+finally:
+    
+    if con:
+        con.close()
+```
