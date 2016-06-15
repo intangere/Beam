@@ -1,8 +1,12 @@
 # Beam
 Markov Chain IRC bot<br>
-Utilizes the Irx library for IRC connections and command handling<br>
 Beam is a library that provides access to simple Markov Chains<br>
 Beam aims to minimize the disk space used by the database as well<br>
+Utilizes the Irx library for IRC connections and command handling<br>
+To get Irx:<br>
+```
+git clone http://github.com/intangere/Irx.git
+```
 <hr>
 Usage:<br>
 ```
