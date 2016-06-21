@@ -15,6 +15,7 @@ Usage:<br>
   beam.addToVocab(word) #Add a word to our vocabulary set<br>
   beam.addToChain(sentence) #Adds a sentence to the database via triple sets<br>
   beam.generateText(seed_sentence) #Seed a markov chain state and generate new text<br>
+  beam.generateRandomText() #Generate new random text using the markov chain state<br>
 ```
 Database Structure/Creation:<br>
 ```
