@@ -35,16 +35,18 @@ class Iris(irc.IRCClient):
 			self.irx.doCommand(channel, user, data)
 		else:
 			if not data.startswith('%s:' % irx.config.nickname):
-				if data.count('.') > 1:
-					data = data.split('.')
-					for line in data:
-						self.beam.addToChain(line)
-				else:
-					self.beam.addToChain(data)
+				if 'headsplitter' not in user:
+					if data.count('.') > 1:
+						data = data.split('.')
+						for line in data:
+							self.beam.addToChain(line)
+					else:
+						self.beam.addToChain(data)
 			else:
-				try:
-				    self.irx.send(channel, '%s: %s' % (user.split('!', 1)[0], self.beam.generateText(data.split('%s:' % irx.config.nickname, 1)[1].strip())))
-				except IndexError:
+				    try:
+				        self.irx.send(channel, '%s: %s' % (user.split('!', 1)[0], self.beam.generateRandomText()))
+				        #self.irx.send(channel, '%s: %s' % (user.split('!', 1)[0], self.beam.generateText(data.split('%s:' % irx.config.nickname, 1)[1].strip()))) This is seeded with your message
+				    except IndexError:
 					pass
 class BotFactory(protocol.ClientFactory):
 
@@ -63,4 +65,3 @@ if __name__ == "__main__":
 	Factory = BotFactory()
 	reactor.connectTCP(irx.config.host, irx.config.port, Factory)
 	reactor.run()
-

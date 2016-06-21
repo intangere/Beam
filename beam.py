@@ -6,6 +6,7 @@ _POS = '<POS>'
 _UPDATE_V_K = "UPDATE data set value = ? where key = ?"
 _INSERT_V_K = "INSERT INTO data (key,value) VALUES (?,?)"
 _SELECT_V = "SELECT value FROM data WHERE key =?"
+_SELECT_ALL = "SELECT * FROM data"
 _SELECT_K = "SELECT key from data WHERE key LIKE ?"
 
 class Beam():
@@ -28,6 +29,11 @@ class Beam():
     def addToChain(self, data):
         data = ' '.join([data.strip(), _POS])
         data = data.split(' ')
+    data_ = []
+    for d in data:
+        if 'http' not in d:
+            data_.append(d)
+    data = data_
         words = self.toIdxs(data)
         if len(data) < 3:
             return
@@ -59,6 +65,29 @@ class Beam():
         f.write('%s\n' % word)
         f.close()
         self.vocab, self.vocab_rev = self.getVocab()
+    def generateRandomText(self):
+    key = choice(self.query(self.db_file, _SELECT_ALL, ()))[0]
+        idxs = []
+        pos = self.vocab[_POS]
+        #fail_counter = 0
+        while pos not in idxs and len(idxs) < 50:
+            query = self.query(self.db_file, _SELECT_V, (key,))
+            if len(query) > 0:
+                if len(query[0]) > 0:
+                    values = query[0][0]
+                    if ',' in values:
+                        value = choice(values.split(','))
+                        idxs.append(value)
+                        key = '%s,%s' % (key.split(',')[1], value)
+                    else:
+                        idxs.append(values)
+                        key = '%s,%s' % (key.split(',')[1], values)
+        else:
+        key = choice(self.query(self.db_file, _SELECT_ALL, ()))[0]
+            #else:
+            #    fail_counter += 1
+        return self.fromIdxs(idxs)
+
     def generateText(self, seed):
         key = None
         if seed.count(' ') < 1:
