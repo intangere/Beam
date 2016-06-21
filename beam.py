@@ -29,11 +29,11 @@ class Beam():
     def addToChain(self, data):
         data = ' '.join([data.strip(), _POS])
         data = data.split(' ')
-    data_ = []
-    for d in data:
-        if 'http' not in d:
-            data_.append(d)
-    data = data_
+        data_ = []
+        for d in data:
+            if 'http' not in d:
+                data_.append(d)
+        data = data_
         words = self.toIdxs(data)
         if len(data) < 3:
             return
@@ -66,7 +66,7 @@ class Beam():
         f.close()
         self.vocab, self.vocab_rev = self.getVocab()
     def generateRandomText(self):
-    key = choice(self.query(self.db_file, _SELECT_ALL, ()))[0]
+        key = choice(self.query(self.db_file, _SELECT_ALL, ()))[0]
         idxs = []
         pos = self.vocab[_POS]
         #fail_counter = 0
